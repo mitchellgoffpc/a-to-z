@@ -39,7 +39,7 @@ class Tensor:
     self.grad = Tensor(np.ones(self.shape, np.float32))
     for node in self.toposort():
       if node.ctx:
-        for x, grad in zip(node.ctx.inputs, node.ctx.backward(node.ctx, self.grad)):
+        for x, grad in zip(node.ctx.inputs, node.ctx.backward(self.grad)):
           x.grad = grad if x.grad is None else Add.apply(x.grad, grad)
       del node.ctx
 
@@ -57,7 +57,7 @@ class Function:
   @classmethod
   def apply(cls, *args):
     ctx = cls(*args)
-    result = cls.forward(ctx, *args)
+    result = ctx.forward(*args)
     result.ctx = ctx
     return result
 
