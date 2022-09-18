@@ -49,7 +49,7 @@ class Tensor:
 
 class Function:
   def __init__(self, *inputs):
-    self.inputs = inputs
+    self.inputs = [x for x in inputs if isinstance(x, Tensor)]
     self.cl_ctx = cl_ctx
     self.cl_queue = cl_queue
     self.saved_tensors = []
@@ -77,8 +77,8 @@ class Function:
 def clbuild(source):
   return cl.Program(cl_ctx, source).build()
 
-def buffer_new(size):
-  return cl.Buffer(cl_ctx, flags.READ_ONLY, size=size)
+def buffer_new(shape):
+  return cl.Buffer(cl_ctx, flags.READ_ONLY, size=np.prod(shape)*4)
 
 def buffer_like(buffer):
   return cl.Buffer(cl_ctx, flags.READ_ONLY, size=buffer.size)

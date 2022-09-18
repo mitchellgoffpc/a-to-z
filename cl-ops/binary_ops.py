@@ -2,24 +2,24 @@ from helpers import Tensor, Function, clbuild, buffer_like
 
 def binary_op_forward(op):
   return clbuild(f"""
-    __kernel void binary_op_forward(__global const float *a_g, __global const float *b_g, __global float *out) {{
+    __kernel void binary_op_forward(__global const float *a_g, __global const float *b_g, __global float *out_g) {{
       int gid = get_global_id(0);
       float a = a_g[gid];
       float b = b_g[gid];
-      out[gid] = {op};
+      out_g[gid] = {op};
     }}""").binary_op_forward
 
 def binary_op_backward(op_a, op_b):
   return clbuild(f"""
     __kernel void binary_op_backward(__global const float *a_g,     __global const float *b_g, __global const float *out_g,
-                                     __global const float *d_out_g, __global float *d_a,       __global float *d_b) {{
+                                     __global const float *d_out_g, __global float *d_a_g,       __global float *d_b_g) {{
       int gid = get_global_id(0);
       float a = a_g[gid];
       float b = b_g[gid];
       float out = out_g[gid];
       float d_out = d_out_g[gid];
-      d_a[gid] = {op_a};
-      d_b[gid] = {op_b};
+      d_a_g[gid] = {op_a};
+      d_b_g[gid] = {op_b};
     }}""").binary_op_backward
 
 class BinaryOp(Function):

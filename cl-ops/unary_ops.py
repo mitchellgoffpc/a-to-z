@@ -2,21 +2,21 @@ from helpers import Tensor, Function, clbuild, buffer_like
 
 def unary_op_forward(op):
   return clbuild(f"""
-    __kernel void unary_op_forward(__global const float *a_g, __global float *out) {{
+    __kernel void unary_op_forward(__global const float *a_g, __global float *out_g) {{
       int gid = get_global_id(0);
       float a = a_g[gid];
-      out[gid] = {op};
+      out_g[gid] = {op};
     }}""").unary_op_forward
 
 def unary_op_backward(op):
   return clbuild(f"""
     __kernel void unary_op_backward(__global const float *a_g,     __global const float *out_g,
-                                     __global const float *d_out_g, __global float *d_a) {{
+                                     __global const float *d_out_g, __global float *d_a_g) {{
       int gid = get_global_id(0);
       float a = a_g[gid];
       float out = out_g[gid];
       float d_out = d_out_g[gid];
-      d_a[gid] = {op};
+      d_a_g[gid] = {op};
     }}""").unary_op_backward
 
 class UnaryOp(Function):

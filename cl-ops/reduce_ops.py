@@ -28,18 +28,18 @@ def reduce_op_forward(map_op, reduce_op):
 def reduce_op_backward(op):
   return clbuild(f"""
     __kernel void reduce_op_backward(__global const float *a_g,     __global const float *out_g,
-                                     __global const float *d_out_g, __global float *d_a) {{
+                                     __global const float *d_out_g, __global float *d_a_g) {{
       int n = get_global_size(0);
       int gid = get_global_id(0);
       float a = a_g[gid];
       float out = out_g[0];
       float d_out = d_out_g[0];
-      d_a[gid] = {op};
+      d_a_g[gid] = {op};
     }}""").reduce_op_backward
 
 class ReduceOp(Function):
   def forward(self, a):
-    output = buffer_new(4)
+    output = buffer_new(shape=(1,))
     self.forward_kernel(self.cl_queue, [a.size], [16*16], a.data, output)
     result = Tensor(output, shape=(1,))
     self.save_for_backward(a, result)
