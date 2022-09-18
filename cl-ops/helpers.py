@@ -77,5 +77,8 @@ class Function:
 def clbuild(source):
   return cl.Program(cl_ctx, source).build()
 
+def buffer_new(size):
+  return cl.Buffer(cl_ctx, flags.READ_ONLY, size=size)
+
 def buffer_like(buffer):
   return cl.Buffer(cl_ctx, flags.READ_ONLY, size=buffer.size)
