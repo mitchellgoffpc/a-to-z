@@ -77,8 +77,8 @@ class Function:
 def clbuild(source):
   return cl.Program(cl_ctx, source).build()
 
-def buffer_new(shape):
-  return cl.Buffer(cl_ctx, flags.READ_ONLY, size=np.prod(shape)*4)
+def buffer_new(shape, dtype=np.dtype('float32')):
+  return cl.Buffer(cl_ctx, flags.READ_ONLY, size=np.prod(shape)*dtype.itemsize)
 
 def buffer_like(buffer):
   return cl.Buffer(cl_ctx, flags.READ_ONLY, size=buffer.size)
