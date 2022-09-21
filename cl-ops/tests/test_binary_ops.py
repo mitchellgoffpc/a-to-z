@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from binary_ops import Add, Sub, Mul, Div, Pow
+from ops.binary_ops import Add, Sub, Mul, Div, Pow
 from parameterized import parameterized
 
 np.random.seed(42)

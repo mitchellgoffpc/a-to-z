@@ -1,5 +1,5 @@
 import numpy as np
-from pad import Pad2D
+from ops.pad import Pad2D
 from helpers import Tensor, Function, clbuild, buffer_new, buffer_like
 
 conv2d_forward = clbuild(f"""

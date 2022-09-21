@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from conv import Conv2D
+from ops.conv import Conv2D
 
 np.random.seed(42)
 

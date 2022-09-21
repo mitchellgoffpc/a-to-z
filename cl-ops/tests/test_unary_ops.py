@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from unary_ops import Negate, Relu
+from ops.unary_ops import Negate, Relu
 from parameterized import parameterized
 
 np.random.seed(42)

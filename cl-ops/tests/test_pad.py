@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from pad import Pad2D, Crop2D
+from ops.pad import Pad2D, Crop2D
 from parameterized import parameterized
 
 np.random.seed(42)

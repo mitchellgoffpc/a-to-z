@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from maxpool import MaxPool2D
+from ops.maxpool import MaxPool2D
 from parameterized import parameterized
 
 np.random.seed(42)

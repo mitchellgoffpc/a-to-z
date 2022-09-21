@@ -2,7 +2,7 @@ import torch
 import unittest
 import numpy as np
 from helpers import Tensor
-from reduce_ops import Sum, Mean, Min, Max
+from ops.reduce_ops import Sum, Mean, Min, Max
 from parameterized import parameterized
 
 np.random.seed(42)
