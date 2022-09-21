@@ -66,3 +66,6 @@ class Min(ReduceOp):
 class Max(ReduceOp):
   forward_kernel = reduce_op_forward("a", "max(acc, a)")
   backward_kernel = reduce_op_backward("a == out ? d_out : 0.0")
+
+for key, op in {'sum': Sum, 'mean': Mean, 'min': Min, 'max': Max}.items():
+  setattr(Tensor, key, op.apply)
